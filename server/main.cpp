@@ -3,6 +3,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/epoll.h>
+#include <map>
 #include <netinet/in.h>
 #include "message.pb.h"
 #include "client.h"
@@ -33,7 +34,7 @@ int main() {
 
   // currently supporting only one client
   // add map which allow to get client by socket
-  Client *client = nullptr;
+  map<int, Client*> client_list;
   
   while(true) {
     epoll_wait(epoll_fd, &current_event, 1, -1);
@@ -42,9 +43,10 @@ int main() {
       int client_socket = accept(listen_socket, NULL, NULL);
       listen_event.data.fd = client_socket;
       epoll_ctl(epoll_fd, EPOLL_CTL_ADD, client_socket, &listen_event);
-      client = new Client(client_socket);
+      client_list.insert(pair<int, Client*>(client_socket, new Client(client_socket)));
     } else if (current_event.events & EPOLLIN) {
-      client->read_from_socket();
+      int client_socket = current_event.data.fd;
+      client_list.at(client_socket)->read_from_socket();
     }
 
   }

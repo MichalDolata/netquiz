@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-Wall -std=c++14 -lprotobuf -pthread
+CFLAGS=-g -Wall -std=c++14 -lprotobuf -pthread
 DEPS = hellomake.h
 OBJ = hellomake.o hellofunc.o 
 

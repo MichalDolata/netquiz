@@ -1,7 +1,8 @@
 #include "client.h"
 
+constexpr int BUF_SIZE = 5;
+
 void Client::read_from_socket() {
-  cout << "Reading" << endl;
   if(!bytes_to_read) {
     size_bytes_to_read -= recv(socket, (size_buf + (4 - size_bytes_to_read)), size_bytes_to_read, 0); 
 
@@ -12,8 +13,10 @@ void Client::read_from_socket() {
     }
   }
 
-  char buf[255];
-  bytes_to_read -= recv(socket, buf, bytes_to_read, 0);
+  char buf[BUF_SIZE];
+  int can_read_bytes = BUF_SIZE < bytes_to_read ? BUF_SIZE : bytes_to_read;
+
+  bytes_to_read -= recv(socket, buf, can_read_bytes, 0);
   message_buffer += buf;
 
   if(!bytes_to_read) {
