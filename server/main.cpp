@@ -1,10 +1,18 @@
 #include <iostream>
+#include <string>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/epoll.h>
 #include <netinet/in.h>
+#include "message.pb.h"
+#include "client.h"
+
+using namespace std;
+using namespace message;
 
 int main() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
   int listen_socket = socket(AF_INET, SOCK_STREAM, 0);
   sockaddr_in server_addr;
   server_addr.sin_family = AF_INET;
@@ -22,13 +30,23 @@ int main() {
   epoll_ctl(epoll_fd, EPOLL_CTL_ADD, listen_socket, &listen_event);
 
   epoll_event current_event;
+
+  // currently supporting only one client
+  // add map which allow to get client by socket
+  Client *client = nullptr;
+  
   while(true) {
     epoll_wait(epoll_fd, &current_event, 1, -1);
 
     if (current_event.events & EPOLLIN && current_event.data.fd == listen_socket) {
-      std::cout << "Trying to connect" << std::endl;
-      accept(listen_socket, NULL, NULL);
+      int client_socket = accept(listen_socket, NULL, NULL);
+      listen_event.data.fd = client_socket;
+      epoll_ctl(epoll_fd, EPOLL_CTL_ADD, client_socket, &listen_event);
+      client = new Client(client_socket);
+    } else if (current_event.events & EPOLLIN) {
+      client->read_from_socket();
     }
+
   }
 
   return 0;

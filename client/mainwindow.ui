@@ -24,7 +24,7 @@
      </rect>
     </property>
     <widget class="QWidget" name="menu">
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>220</x>
@@ -52,6 +52,16 @@ Click the button to join the game</string>
         </widget>
        </item>
        <item>
+        <widget class="QLineEdit" name="nickNameEdit">
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="placeholderText">
+          <string>Your nick name</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="connectButton">
          <property name="text">
           <string>Connect</string>
@@ -62,7 +72,7 @@ Click the button to join the game</string>
      </widget>
     </widget>
     <widget class="QWidget" name="game">
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>19</x>
@@ -99,7 +109,7 @@ Click the button to join the game</string>
            <bool>true</bool>
           </property>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>70</x>

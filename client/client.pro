@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets network
 
 TARGET = client
 TEMPLATE = app
@@ -25,10 +25,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    message.pb.cc
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    message.pb.h
 
 FORMS += \
         mainwindow.ui
+
+LIBS += -lprotobuf -pthread

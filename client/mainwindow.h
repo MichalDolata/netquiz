@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtNetwork>
+#include "message.pb.h"
 
 namespace Ui {
 class MainWindow;
