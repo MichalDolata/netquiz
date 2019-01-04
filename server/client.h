@@ -7,6 +7,9 @@ using namespace std;
 using namespace message;
 
 class Client {
+  public:
+  static map<int, Client*> client_list;
+
   private:
   int socket;
   char size_buf[4];
@@ -15,9 +18,11 @@ class Client {
   string message_buffer;
   Message current_message;
   string nick_name;
+  float points;
 
   public:
-  Client(int socket) : socket{socket}, size_bytes_to_read{4}, bytes_to_read{0} {};
+  Client(int socket) : socket{socket}, size_bytes_to_read{4}, bytes_to_read{0}, points{0} {};
   void read_from_socket();
   void handle_message();
+  void send_ranking();
 };

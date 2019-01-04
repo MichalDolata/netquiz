@@ -20,7 +20,9 @@
 // @@protoc_insertion_point(includes)
 
 namespace protobuf_message_2eproto {
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_message_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_Ranking_Player;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_message_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_SetPlayerName;
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_message_2eproto ::google::protobuf::internal::SCCInfo<1> scc_info_Ranking;
 }  // namespace protobuf_message_2eproto
 namespace message {
 class MessageDefaultTypeInternal {
@@ -28,12 +30,23 @@ class MessageDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<Message>
       _instance;
   const ::message::SetPlayerName* set_player_name_;
+  const ::message::Ranking* ranking_;
 } _Message_default_instance_;
 class SetPlayerNameDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<SetPlayerName>
       _instance;
 } _SetPlayerName_default_instance_;
+class Ranking_PlayerDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<Ranking_Player>
+      _instance;
+} _Ranking_Player_default_instance_;
+class RankingDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<Ranking>
+      _instance;
+} _Ranking_default_instance_;
 }  // namespace message
 namespace protobuf_message_2eproto {
 static void InitDefaultsMessage() {
@@ -47,9 +60,10 @@ static void InitDefaultsMessage() {
   ::message::Message::InitAsDefaultInstance();
 }
 
-::google::protobuf::internal::SCCInfo<1> scc_info_Message =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsMessage}, {
-      &protobuf_message_2eproto::scc_info_SetPlayerName.base,}};
+::google::protobuf::internal::SCCInfo<2> scc_info_Message =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 2, InitDefaultsMessage}, {
+      &protobuf_message_2eproto::scc_info_SetPlayerName.base,
+      &protobuf_message_2eproto::scc_info_Ranking.base,}};
 
 static void InitDefaultsSetPlayerName() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -65,12 +79,43 @@ static void InitDefaultsSetPlayerName() {
 ::google::protobuf::internal::SCCInfo<0> scc_info_SetPlayerName =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsSetPlayerName}, {}};
 
+static void InitDefaultsRanking_Player() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::message::_Ranking_Player_default_instance_;
+    new (ptr) ::message::Ranking_Player();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::message::Ranking_Player::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<0> scc_info_Ranking_Player =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsRanking_Player}, {}};
+
+static void InitDefaultsRanking() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::message::_Ranking_default_instance_;
+    new (ptr) ::message::Ranking();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::message::Ranking::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<1> scc_info_Ranking =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsRanking}, {
+      &protobuf_message_2eproto::scc_info_Ranking_Player.base,}};
+
 void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_Message.base);
   ::google::protobuf::internal::InitSCC(&scc_info_SetPlayerName.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_Ranking_Player.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_Ranking.base);
 }
 
-::google::protobuf::Metadata file_level_metadata[2];
+::google::protobuf::Metadata file_level_metadata[4];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -79,6 +124,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::message::Message, _oneof_case_[0]),
   ~0u,  // no _weak_field_map_
   offsetof(::message::MessageDefaultTypeInternal, set_player_name_),
+  offsetof(::message::MessageDefaultTypeInternal, ranking_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::message::Message, type_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::message::SetPlayerName, _internal_metadata_),
@@ -86,15 +132,32 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::message::SetPlayerName, name_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::message::Ranking_Player, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::message::Ranking_Player, name_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::message::Ranking_Player, points_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::message::Ranking, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::message::Ranking, players_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::message::Message)},
-  { 7, -1, sizeof(::message::SetPlayerName)},
+  { 8, -1, sizeof(::message::SetPlayerName)},
+  { 14, -1, sizeof(::message::Ranking_Player)},
+  { 21, -1, sizeof(::message::Ranking)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::message::_Message_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::message::_SetPlayerName_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::message::_Ranking_Player_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::message::_Ranking_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
@@ -112,19 +175,22 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 2);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 4);
 }
 
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\rmessage.proto\022\007message\"D\n\007Message\0221\n\017s"
+      "\n\rmessage.proto\022\007message\"i\n\007Message\0221\n\017s"
       "et_player_name\030\001 \001(\0132\026.message.SetPlayer"
-      "NameH\000B\006\n\004type\"\035\n\rSetPlayerName\022\014\n\004name\030"
-      "\001 \001(\tb\006proto3"
+      "NameH\000\022#\n\007ranking\030\002 \001(\0132\020.message.Rankin"
+      "gH\000B\006\n\004type\"\035\n\rSetPlayerName\022\014\n\004name\030\001 \001"
+      "(\t\"[\n\007Ranking\022(\n\007players\030\001 \003(\0132\027.message"
+      ".Ranking.Player\032&\n\006Player\022\014\n\004name\030\001 \001(\t\022"
+      "\016\n\006points\030\002 \001(\002b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 133);
+      descriptor, 263);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "message.proto", &protobuf_RegisterTypes);
 }
@@ -147,6 +213,8 @@ namespace message {
 void Message::InitAsDefaultInstance() {
   ::message::_Message_default_instance_.set_player_name_ = const_cast< ::message::SetPlayerName*>(
       ::message::SetPlayerName::internal_default_instance());
+  ::message::_Message_default_instance_.ranking_ = const_cast< ::message::Ranking*>(
+      ::message::Ranking::internal_default_instance());
 }
 void Message::set_allocated_set_player_name(::message::SetPlayerName* set_player_name) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
@@ -162,8 +230,23 @@ void Message::set_allocated_set_player_name(::message::SetPlayerName* set_player
   }
   // @@protoc_insertion_point(field_set_allocated:message.Message.set_player_name)
 }
+void Message::set_allocated_ranking(::message::Ranking* ranking) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  clear_type();
+  if (ranking) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      ranking = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, ranking, submessage_arena);
+    }
+    set_has_ranking();
+    type_.ranking_ = ranking;
+  }
+  // @@protoc_insertion_point(field_set_allocated:message.Message.ranking)
+}
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int Message::kSetPlayerNameFieldNumber;
+const int Message::kRankingFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 Message::Message()
@@ -181,6 +264,10 @@ Message::Message(const Message& from)
   switch (from.type_case()) {
     case kSetPlayerName: {
       mutable_set_player_name()->::message::SetPlayerName::MergeFrom(from.set_player_name());
+      break;
+    }
+    case kRanking: {
+      mutable_ranking()->::message::Ranking::MergeFrom(from.ranking());
       break;
     }
     case TYPE_NOT_SET: {
@@ -226,6 +313,10 @@ void Message::clear_type() {
       delete type_.set_player_name_;
       break;
     }
+    case kRanking: {
+      delete type_.ranking_;
+      break;
+    }
     case TYPE_NOT_SET: {
       break;
     }
@@ -266,6 +357,18 @@ bool Message::MergePartialFromCodedStream(
         break;
       }
 
+      // .message.Ranking ranking = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+               input, mutable_ranking()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -298,6 +401,12 @@ void Message::SerializeWithCachedSizes(
       1, this->_internal_set_player_name(), output);
   }
 
+  // .message.Ranking ranking = 2;
+  if (has_ranking()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, this->_internal_ranking(), output);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -317,6 +426,13 @@ void Message::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
         1, this->_internal_set_player_name(), deterministic, target);
+  }
+
+  // .message.Ranking ranking = 2;
+  if (has_ranking()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        2, this->_internal_ranking(), deterministic, target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -342,6 +458,13 @@ size_t Message::ByteSizeLong() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSize(
           *type_.set_player_name_);
+      break;
+    }
+    // .message.Ranking ranking = 2;
+    case kRanking: {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSize(
+          *type_.ranking_);
       break;
     }
     case TYPE_NOT_SET: {
@@ -378,6 +501,10 @@ void Message::MergeFrom(const Message& from) {
   switch (from.type_case()) {
     case kSetPlayerName: {
       mutable_set_player_name()->::message::SetPlayerName::MergeFrom(from.set_player_name());
+      break;
+    }
+    case kRanking: {
+      mutable_ranking()->::message::Ranking::MergeFrom(from.ranking());
       break;
     }
     case TYPE_NOT_SET: {
@@ -663,6 +790,514 @@ void SetPlayerName::InternalSwap(SetPlayerName* other) {
 }
 
 
+// ===================================================================
+
+void Ranking_Player::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int Ranking_Player::kNameFieldNumber;
+const int Ranking_Player::kPointsFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+Ranking_Player::Ranking_Player()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_message_2eproto::scc_info_Ranking_Player.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:message.Ranking.Player)
+}
+Ranking_Player::Ranking_Player(const Ranking_Player& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.name().size() > 0) {
+    name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
+  }
+  points_ = from.points_;
+  // @@protoc_insertion_point(copy_constructor:message.Ranking.Player)
+}
+
+void Ranking_Player::SharedCtor() {
+  name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  points_ = 0;
+}
+
+Ranking_Player::~Ranking_Player() {
+  // @@protoc_insertion_point(destructor:message.Ranking.Player)
+  SharedDtor();
+}
+
+void Ranking_Player::SharedDtor() {
+  name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void Ranking_Player::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* Ranking_Player::descriptor() {
+  ::protobuf_message_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_message_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const Ranking_Player& Ranking_Player::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_message_2eproto::scc_info_Ranking_Player.base);
+  return *internal_default_instance();
+}
+
+
+void Ranking_Player::Clear() {
+// @@protoc_insertion_point(message_clear_start:message.Ranking.Player)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  points_ = 0;
+  _internal_metadata_.Clear();
+}
+
+bool Ranking_Player::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:message.Ranking.Player)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // string name = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_name()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->name().data(), static_cast<int>(this->name().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "message.Ranking.Player.name"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // float points = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(21u /* 21 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &points_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:message.Ranking.Player)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:message.Ranking.Player)
+  return false;
+#undef DO_
+}
+
+void Ranking_Player::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:message.Ranking.Player)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string name = 1;
+  if (this->name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->name().data(), static_cast<int>(this->name().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "message.Ranking.Player.name");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->name(), output);
+  }
+
+  // float points = 2;
+  if (this->points() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(2, this->points(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:message.Ranking.Player)
+}
+
+::google::protobuf::uint8* Ranking_Player::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:message.Ranking.Player)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string name = 1;
+  if (this->name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->name().data(), static_cast<int>(this->name().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "message.Ranking.Player.name");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->name(), target);
+  }
+
+  // float points = 2;
+  if (this->points() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(2, this->points(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:message.Ranking.Player)
+  return target;
+}
+
+size_t Ranking_Player::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:message.Ranking.Player)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // string name = 1;
+  if (this->name().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->name());
+  }
+
+  // float points = 2;
+  if (this->points() != 0) {
+    total_size += 1 + 4;
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void Ranking_Player::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:message.Ranking.Player)
+  GOOGLE_DCHECK_NE(&from, this);
+  const Ranking_Player* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const Ranking_Player>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:message.Ranking.Player)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:message.Ranking.Player)
+    MergeFrom(*source);
+  }
+}
+
+void Ranking_Player::MergeFrom(const Ranking_Player& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:message.Ranking.Player)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.name().size() > 0) {
+
+    name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
+  }
+  if (from.points() != 0) {
+    set_points(from.points());
+  }
+}
+
+void Ranking_Player::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:message.Ranking.Player)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void Ranking_Player::CopyFrom(const Ranking_Player& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:message.Ranking.Player)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Ranking_Player::IsInitialized() const {
+  return true;
+}
+
+void Ranking_Player::Swap(Ranking_Player* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void Ranking_Player::InternalSwap(Ranking_Player* other) {
+  using std::swap;
+  name_.Swap(&other->name_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(points_, other->points_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata Ranking_Player::GetMetadata() const {
+  protobuf_message_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_message_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void Ranking::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int Ranking::kPlayersFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+Ranking::Ranking()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_message_2eproto::scc_info_Ranking.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:message.Ranking)
+}
+Ranking::Ranking(const Ranking& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      players_(from.players_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:message.Ranking)
+}
+
+void Ranking::SharedCtor() {
+}
+
+Ranking::~Ranking() {
+  // @@protoc_insertion_point(destructor:message.Ranking)
+  SharedDtor();
+}
+
+void Ranking::SharedDtor() {
+}
+
+void Ranking::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* Ranking::descriptor() {
+  ::protobuf_message_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_message_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const Ranking& Ranking::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_message_2eproto::scc_info_Ranking.base);
+  return *internal_default_instance();
+}
+
+
+void Ranking::Clear() {
+// @@protoc_insertion_point(message_clear_start:message.Ranking)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  players_.Clear();
+  _internal_metadata_.Clear();
+}
+
+bool Ranking::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:message.Ranking)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated .message.Ranking.Player players = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+                input, add_players()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:message.Ranking)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:message.Ranking)
+  return false;
+#undef DO_
+}
+
+void Ranking::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:message.Ranking)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated .message.Ranking.Player players = 1;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->players_size()); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1,
+      this->players(static_cast<int>(i)),
+      output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:message.Ranking)
+}
+
+::google::protobuf::uint8* Ranking::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:message.Ranking)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated .message.Ranking.Player players = 1;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->players_size()); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        1, this->players(static_cast<int>(i)), deterministic, target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:message.Ranking)
+  return target;
+}
+
+size_t Ranking::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:message.Ranking)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // repeated .message.Ranking.Player players = 1;
+  {
+    unsigned int count = static_cast<unsigned int>(this->players_size());
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::google::protobuf::internal::WireFormatLite::MessageSize(
+          this->players(static_cast<int>(i)));
+    }
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void Ranking::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:message.Ranking)
+  GOOGLE_DCHECK_NE(&from, this);
+  const Ranking* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const Ranking>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:message.Ranking)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:message.Ranking)
+    MergeFrom(*source);
+  }
+}
+
+void Ranking::MergeFrom(const Ranking& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:message.Ranking)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  players_.MergeFrom(from.players_);
+}
+
+void Ranking::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:message.Ranking)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void Ranking::CopyFrom(const Ranking& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:message.Ranking)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Ranking::IsInitialized() const {
+  return true;
+}
+
+void Ranking::Swap(Ranking* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void Ranking::InternalSwap(Ranking* other) {
+  using std::swap;
+  CastToBase(&players_)->InternalSwap(CastToBase(&other->players_));
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata Ranking::GetMetadata() const {
+  protobuf_message_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_message_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace message
 namespace google {
@@ -672,6 +1307,12 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::message::Message* Arena::CreateM
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::message::SetPlayerName* Arena::CreateMaybeMessage< ::message::SetPlayerName >(Arena* arena) {
   return Arena::CreateInternal< ::message::SetPlayerName >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::message::Ranking_Player* Arena::CreateMaybeMessage< ::message::Ranking_Player >(Arena* arena) {
+  return Arena::CreateInternal< ::message::Ranking_Player >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::message::Ranking* Arena::CreateMaybeMessage< ::message::Ranking >(Arena* arena) {
+  return Arena::CreateInternal< ::message::Ranking >(arena);
 }
 }  // namespace protobuf
 }  // namespace google

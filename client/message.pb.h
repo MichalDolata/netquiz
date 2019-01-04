@@ -38,7 +38,7 @@ namespace protobuf_message_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[2];
+  static const ::google::protobuf::internal::ParseTable schema[4];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -49,6 +49,12 @@ namespace message {
 class Message;
 class MessageDefaultTypeInternal;
 extern MessageDefaultTypeInternal _Message_default_instance_;
+class Ranking;
+class RankingDefaultTypeInternal;
+extern RankingDefaultTypeInternal _Ranking_default_instance_;
+class Ranking_Player;
+class Ranking_PlayerDefaultTypeInternal;
+extern Ranking_PlayerDefaultTypeInternal _Ranking_Player_default_instance_;
 class SetPlayerName;
 class SetPlayerNameDefaultTypeInternal;
 extern SetPlayerNameDefaultTypeInternal _SetPlayerName_default_instance_;
@@ -56,6 +62,8 @@ extern SetPlayerNameDefaultTypeInternal _SetPlayerName_default_instance_;
 namespace google {
 namespace protobuf {
 template<> ::message::Message* Arena::CreateMaybeMessage<::message::Message>(Arena*);
+template<> ::message::Ranking* Arena::CreateMaybeMessage<::message::Ranking>(Arena*);
+template<> ::message::Ranking_Player* Arena::CreateMaybeMessage<::message::Ranking_Player>(Arena*);
 template<> ::message::SetPlayerName* Arena::CreateMaybeMessage<::message::SetPlayerName>(Arena*);
 }  // namespace protobuf
 }  // namespace google
@@ -94,6 +102,7 @@ class Message : public ::google::protobuf::Message /* @@protoc_insertion_point(c
 
   enum TypeCase {
     kSetPlayerName = 1,
+    kRanking = 2,
     TYPE_NOT_SET = 0,
   };
 
@@ -167,11 +176,24 @@ class Message : public ::google::protobuf::Message /* @@protoc_insertion_point(c
   ::message::SetPlayerName* mutable_set_player_name();
   void set_allocated_set_player_name(::message::SetPlayerName* set_player_name);
 
+  // .message.Ranking ranking = 2;
+  bool has_ranking() const;
+  void clear_ranking();
+  static const int kRankingFieldNumber = 2;
+  private:
+  const ::message::Ranking& _internal_ranking() const;
+  public:
+  const ::message::Ranking& ranking() const;
+  ::message::Ranking* release_ranking();
+  ::message::Ranking* mutable_ranking();
+  void set_allocated_ranking(::message::Ranking* ranking);
+
   void clear_type();
   TypeCase type_case() const;
   // @@protoc_insertion_point(class_scope:message.Message)
  private:
   void set_has_set_player_name();
+  void set_has_ranking();
 
   inline bool has_type() const;
   inline void clear_has_type();
@@ -180,6 +202,7 @@ class Message : public ::google::protobuf::Message /* @@protoc_insertion_point(c
   union TypeUnion {
     TypeUnion() {}
     ::message::SetPlayerName* set_player_name_;
+    ::message::Ranking* ranking_;
   } type_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   ::google::protobuf::uint32 _oneof_case_[1];
@@ -297,6 +320,235 @@ class SetPlayerName : public ::google::protobuf::Message /* @@protoc_insertion_p
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_message_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class Ranking_Player : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:message.Ranking.Player) */ {
+ public:
+  Ranking_Player();
+  virtual ~Ranking_Player();
+
+  Ranking_Player(const Ranking_Player& from);
+
+  inline Ranking_Player& operator=(const Ranking_Player& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  Ranking_Player(Ranking_Player&& from) noexcept
+    : Ranking_Player() {
+    *this = ::std::move(from);
+  }
+
+  inline Ranking_Player& operator=(Ranking_Player&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Ranking_Player& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const Ranking_Player* internal_default_instance() {
+    return reinterpret_cast<const Ranking_Player*>(
+               &_Ranking_Player_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  void Swap(Ranking_Player* other);
+  friend void swap(Ranking_Player& a, Ranking_Player& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline Ranking_Player* New() const final {
+    return CreateMaybeMessage<Ranking_Player>(NULL);
+  }
+
+  Ranking_Player* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<Ranking_Player>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const Ranking_Player& from);
+  void MergeFrom(const Ranking_Player& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Ranking_Player* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string name = 1;
+  void clear_name();
+  static const int kNameFieldNumber = 1;
+  const ::std::string& name() const;
+  void set_name(const ::std::string& value);
+  #if LANG_CXX11
+  void set_name(::std::string&& value);
+  #endif
+  void set_name(const char* value);
+  void set_name(const char* value, size_t size);
+  ::std::string* mutable_name();
+  ::std::string* release_name();
+  void set_allocated_name(::std::string* name);
+
+  // float points = 2;
+  void clear_points();
+  static const int kPointsFieldNumber = 2;
+  float points() const;
+  void set_points(float value);
+
+  // @@protoc_insertion_point(class_scope:message.Ranking.Player)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr name_;
+  float points_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_message_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class Ranking : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:message.Ranking) */ {
+ public:
+  Ranking();
+  virtual ~Ranking();
+
+  Ranking(const Ranking& from);
+
+  inline Ranking& operator=(const Ranking& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  Ranking(Ranking&& from) noexcept
+    : Ranking() {
+    *this = ::std::move(from);
+  }
+
+  inline Ranking& operator=(Ranking&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Ranking& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const Ranking* internal_default_instance() {
+    return reinterpret_cast<const Ranking*>(
+               &_Ranking_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  void Swap(Ranking* other);
+  friend void swap(Ranking& a, Ranking& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline Ranking* New() const final {
+    return CreateMaybeMessage<Ranking>(NULL);
+  }
+
+  Ranking* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<Ranking>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const Ranking& from);
+  void MergeFrom(const Ranking& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Ranking* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  typedef Ranking_Player Player;
+
+  // accessors -------------------------------------------------------
+
+  // repeated .message.Ranking.Player players = 1;
+  int players_size() const;
+  void clear_players();
+  static const int kPlayersFieldNumber = 1;
+  ::message::Ranking_Player* mutable_players(int index);
+  ::google::protobuf::RepeatedPtrField< ::message::Ranking_Player >*
+      mutable_players();
+  const ::message::Ranking_Player& players(int index) const;
+  ::message::Ranking_Player* add_players();
+  const ::google::protobuf::RepeatedPtrField< ::message::Ranking_Player >&
+      players() const;
+
+  // @@protoc_insertion_point(class_scope:message.Ranking)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::message::Ranking_Player > players_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_message_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -350,6 +602,50 @@ inline ::message::SetPlayerName* Message::mutable_set_player_name() {
   }
   // @@protoc_insertion_point(field_mutable:message.Message.set_player_name)
   return type_.set_player_name_;
+}
+
+// .message.Ranking ranking = 2;
+inline bool Message::has_ranking() const {
+  return type_case() == kRanking;
+}
+inline void Message::set_has_ranking() {
+  _oneof_case_[0] = kRanking;
+}
+inline void Message::clear_ranking() {
+  if (has_ranking()) {
+    delete type_.ranking_;
+    clear_has_type();
+  }
+}
+inline const ::message::Ranking& Message::_internal_ranking() const {
+  return *type_.ranking_;
+}
+inline ::message::Ranking* Message::release_ranking() {
+  // @@protoc_insertion_point(field_release:message.Message.ranking)
+  if (has_ranking()) {
+    clear_has_type();
+      ::message::Ranking* temp = type_.ranking_;
+    type_.ranking_ = NULL;
+    return temp;
+  } else {
+    return NULL;
+  }
+}
+inline const ::message::Ranking& Message::ranking() const {
+  // @@protoc_insertion_point(field_get:message.Message.ranking)
+  return has_ranking()
+      ? *type_.ranking_
+      : *reinterpret_cast< ::message::Ranking*>(&::message::_Ranking_default_instance_);
+}
+inline ::message::Ranking* Message::mutable_ranking() {
+  if (!has_ranking()) {
+    clear_type();
+    set_has_ranking();
+    type_.ranking_ = CreateMaybeMessage< ::message::Ranking >(
+        GetArenaNoVirtual());
+  }
+  // @@protoc_insertion_point(field_mutable:message.Message.ranking)
+  return type_.ranking_;
 }
 
 inline bool Message::has_type() const {
@@ -418,9 +714,118 @@ inline void SetPlayerName::set_allocated_name(::std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:message.SetPlayerName.name)
 }
 
+// -------------------------------------------------------------------
+
+// Ranking_Player
+
+// string name = 1;
+inline void Ranking_Player::clear_name() {
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& Ranking_Player::name() const {
+  // @@protoc_insertion_point(field_get:message.Ranking.Player.name)
+  return name_.GetNoArena();
+}
+inline void Ranking_Player::set_name(const ::std::string& value) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:message.Ranking.Player.name)
+}
+#if LANG_CXX11
+inline void Ranking_Player::set_name(::std::string&& value) {
+  
+  name_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:message.Ranking.Player.name)
+}
+#endif
+inline void Ranking_Player::set_name(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:message.Ranking.Player.name)
+}
+inline void Ranking_Player::set_name(const char* value, size_t size) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:message.Ranking.Player.name)
+}
+inline ::std::string* Ranking_Player::mutable_name() {
+  
+  // @@protoc_insertion_point(field_mutable:message.Ranking.Player.name)
+  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* Ranking_Player::release_name() {
+  // @@protoc_insertion_point(field_release:message.Ranking.Player.name)
+  
+  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void Ranking_Player::set_allocated_name(::std::string* name) {
+  if (name != NULL) {
+    
+  } else {
+    
+  }
+  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
+  // @@protoc_insertion_point(field_set_allocated:message.Ranking.Player.name)
+}
+
+// float points = 2;
+inline void Ranking_Player::clear_points() {
+  points_ = 0;
+}
+inline float Ranking_Player::points() const {
+  // @@protoc_insertion_point(field_get:message.Ranking.Player.points)
+  return points_;
+}
+inline void Ranking_Player::set_points(float value) {
+  
+  points_ = value;
+  // @@protoc_insertion_point(field_set:message.Ranking.Player.points)
+}
+
+// -------------------------------------------------------------------
+
+// Ranking
+
+// repeated .message.Ranking.Player players = 1;
+inline int Ranking::players_size() const {
+  return players_.size();
+}
+inline void Ranking::clear_players() {
+  players_.Clear();
+}
+inline ::message::Ranking_Player* Ranking::mutable_players(int index) {
+  // @@protoc_insertion_point(field_mutable:message.Ranking.players)
+  return players_.Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::message::Ranking_Player >*
+Ranking::mutable_players() {
+  // @@protoc_insertion_point(field_mutable_list:message.Ranking.players)
+  return &players_;
+}
+inline const ::message::Ranking_Player& Ranking::players(int index) const {
+  // @@protoc_insertion_point(field_get:message.Ranking.players)
+  return players_.Get(index);
+}
+inline ::message::Ranking_Player* Ranking::add_players() {
+  // @@protoc_insertion_point(field_add:message.Ranking.players)
+  return players_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::message::Ranking_Player >&
+Ranking::players() const {
+  // @@protoc_insertion_point(field_list:message.Ranking.players)
+  return players_;
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

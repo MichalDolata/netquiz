@@ -5,9 +5,19 @@ package message;
 message Message {
   oneof type {
     SetPlayerName set_player_name = 1;
+    Ranking ranking = 2;
   }
 }
 
 message SetPlayerName {
   string name = 1;
+}
+
+message Ranking {
+  repeated Player players = 1;
+
+  message Player {
+    string name = 1;
+    float points = 2;
+  }
 }

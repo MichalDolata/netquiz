@@ -31,10 +31,6 @@ int main() {
   epoll_ctl(epoll_fd, EPOLL_CTL_ADD, listen_socket, &listen_event);
 
   epoll_event current_event;
-
-  // currently supporting only one client
-  // add map which allow to get client by socket
-  map<int, Client*> client_list;
   
   while(true) {
     epoll_wait(epoll_fd, &current_event, 1, -1);
@@ -43,10 +39,10 @@ int main() {
       int client_socket = accept(listen_socket, NULL, NULL);
       listen_event.data.fd = client_socket;
       epoll_ctl(epoll_fd, EPOLL_CTL_ADD, client_socket, &listen_event);
-      client_list.insert(pair<int, Client*>(client_socket, new Client(client_socket)));
+      Client::client_list.insert(pair<int, Client*>(client_socket, new Client(client_socket)));
     } else if (current_event.events & EPOLLIN) {
       int client_socket = current_event.data.fd;
-      client_list.at(client_socket)->read_from_socket();
+      Client::client_list.at(client_socket)->read_from_socket();
     }
 
   }
