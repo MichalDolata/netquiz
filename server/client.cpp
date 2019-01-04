@@ -24,7 +24,7 @@ int Client::read_from_socket() {
     bytes_read = recv(socket, buf, can_read_bytes, 0);
     if (!bytes_read) return -1;
     bytes_to_read -= bytes_to_read;
-    message_buffer += buf;
+    message_buffer += string(buf, bytes_read);
 
     if(!bytes_to_read) {
       current_message.ParseFromString(message_buffer);

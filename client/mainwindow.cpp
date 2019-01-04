@@ -72,8 +72,10 @@ void MainWindow::handleRead() {
     char buf[BUF_SIZE];
     int can_read_bytes = BUF_SIZE < bytes_to_read ? BUF_SIZE : bytes_to_read;
 
-    bytes_to_read -= socket->read(buf, can_read_bytes);
-    message_buffer += buf;
+    qint64 bytes_read;
+    bytes_read = socket->read(buf, can_read_bytes);
+    bytes_to_read -= bytes_read;
+    message_buffer += string(buf, bytes_read);
 
     if(!bytes_to_read) {
       current_message.ParseFromString(message_buffer);
