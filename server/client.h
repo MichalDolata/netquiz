@@ -22,7 +22,7 @@ class Client {
 
   public:
   Client(int socket) : socket{socket}, size_bytes_to_read{4}, bytes_to_read{0}, points{0} {};
-  void read_from_socket();
+  int read_from_socket();
   void handle_message();
   void send_ranking();
 };

@@ -37,14 +37,23 @@ int main() {
 
     if (current_event.events & EPOLLIN && current_event.data.fd == listen_socket) {
       int client_socket = accept(listen_socket, NULL, NULL);
+
+      listen_event.events = EPOLLIN;
       listen_event.data.fd = client_socket;
       epoll_ctl(epoll_fd, EPOLL_CTL_ADD, client_socket, &listen_event);
+
       Client::client_list.insert(pair<int, Client*>(client_socket, new Client(client_socket)));
     } else if (current_event.events & EPOLLIN) {
       int client_socket = current_event.data.fd;
-      Client::client_list.at(client_socket)->read_from_socket();
-    }
+      if(Client::client_list.at(client_socket)->read_from_socket() == -1) {
+        Client::client_list.erase(client_socket);
 
+        listen_event.events = EPOLLIN;
+        listen_event.data.fd = client_socket;
+        epoll_ctl(epoll_fd, EPOLL_CTL_DEL, client_socket, &listen_event);
+        shutdown(client_socket, SHUT_RDWR);
+      }
+    }
   }
 
   return 0;

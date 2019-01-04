@@ -4,30 +4,38 @@ constexpr int BUF_SIZE = 255;
 
 map<int, Client*> Client::client_list;
 
-void Client::read_from_socket() {
+int Client::read_from_socket() {
+  int bytes_read;
   if(!bytes_to_read) {
-    size_bytes_to_read -= recv(socket, (size_buf + (4 - size_bytes_to_read)), size_bytes_to_read, 0); 
+    bytes_read = recv(socket, (size_buf + (4 - size_bytes_to_read)), size_bytes_to_read, 0); 
+    if (!bytes_read) return -1;
 
-    if (size_bytes_to_read > 0) return;
+    size_bytes_to_read -= bytes_read;
+
+    if (size_bytes_to_read > 0) return 0;
     else {
       bytes_to_read = (size_buf[0] << 24) | (size_buf[1] << 16) | (size_buf[2] << 8) | (size_buf[3]);
       size_bytes_to_read = 0;
     }
+  } else {
+    char buf[BUF_SIZE];
+    int can_read_bytes = BUF_SIZE < bytes_to_read ? BUF_SIZE : bytes_to_read;
+
+    bytes_read = recv(socket, buf, can_read_bytes, 0);
+    if (!bytes_read) return -1;
+    bytes_to_read -= bytes_to_read;
+    message_buffer += buf;
+
+    if(!bytes_to_read) {
+      current_message.ParseFromString(message_buffer);
+
+      message_buffer.clear();
+      bytes_to_read = size_bytes_to_read = 0;
+      handle_message();
+    }
   }
 
-  char buf[BUF_SIZE];
-  int can_read_bytes = BUF_SIZE < bytes_to_read ? BUF_SIZE : bytes_to_read;
-
-  bytes_to_read -= recv(socket, buf, can_read_bytes, 0);
-  message_buffer += buf;
-
-  if(!bytes_to_read) {
-    current_message.ParseFromString(message_buffer);
-
-    message_buffer.clear();
-    bytes_to_read = size_bytes_to_read = 0;
-    handle_message();
-  }
+  return 0;
 }
 
 void Client::handle_message() {
