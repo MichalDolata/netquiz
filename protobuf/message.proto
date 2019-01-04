@@ -6,6 +6,8 @@ message Message {
   oneof type {
     SetPlayerName set_player_name = 1;
     Ranking ranking = 2;
+    Question question = 3;
+    Answer answer = 4;
   }
 }
 
@@ -20,4 +22,17 @@ message Ranking {
     string name = 1;
     float points = 2;
   }
+}
+
+message Question {
+  uint64 id = 1;
+  string question = 2;
+  repeated string answers = 3;
+  uint64 deadline_at = 4;
+}
+
+message Answer {
+  uint64 question_id = 1;
+  uint32 selected_answer = 2;
+  uint64 sent_at = 3;
 }

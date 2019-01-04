@@ -7,9 +7,9 @@
 #include <netinet/in.h>
 #include "message.pb.h"
 #include "client.h"
+#include "question.h"
 
 using namespace std;
-using namespace message;
 
 int main() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -42,6 +42,7 @@ int main() {
       listen_event.data.fd = client_socket;
       epoll_ctl(epoll_fd, EPOLL_CTL_ADD, client_socket, &listen_event);
 
+      cout << "Connecting..." << endl;
       Client::client_list.insert(pair<int, Client*>(client_socket, new Client(client_socket)));
     } else if (current_event.events & EPOLLIN) {
       int client_socket = current_event.data.fd;

@@ -30,7 +30,8 @@ int Client::read_from_socket() {
       current_message.ParseFromString(message_buffer);
 
       message_buffer.clear();
-      bytes_to_read = size_bytes_to_read = 0;
+      bytes_to_read = 0;
+      size_bytes_to_read = 4;
       handle_message();
     }
   }
@@ -41,18 +42,28 @@ int Client::read_from_socket() {
 void Client::handle_message() {
   if(current_message.has_set_player_name()) {
     nick_name = current_message.set_player_name().name();
+    cout << nick_name << " connected" << endl;
     send_ranking();
+    Question::current_question.send_to_client(socket);
+  } else if(current_message.has_answer()) {
+    cout << "Got answer from " << nick_name << endl;
+    auto answer = current_message.answer();
+
+    current_answer_timestamp = answer.sent_at();
+    current_question_id = answer.question_id();
+    current_answer = answer.selected_answer();
   } else {
     cout << "Unsupported message" << endl;
   }
 }
 
 void Client::send_ranking() {
+  cout << "Sending ranking to " << nick_name << endl;
   Message ranking_message;
-  Ranking *ranking = new Ranking;
+  message::Ranking *ranking = new message::Ranking;
   
-  for(auto it: client_list) {
-    Ranking_Player *player = ranking->add_players();
+  for(auto it: Client::client_list) {
+    message::Ranking_Player *player = ranking->add_players();
     player->set_name(it.second->nick_name);
     player->set_points(it.second->points);
   }

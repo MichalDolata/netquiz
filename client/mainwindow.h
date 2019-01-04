@@ -29,12 +29,20 @@ private:
     string message_buffer;
     Message current_message;
     Ui::MainWindow *ui;
+    QTimer *timer;
+    quint64 deadline_at;
+    quint64 question_id;
 
     void handle_message();
+    void disable_answering();
+    void enable_answering();
+    void handle_answer(int selected_answer);
+    void send_message(Message &message);
 
 private slots:
     void handleConnect();
     void handleRead();
+    void handleTick();
 };
 
 #endif // MAINWINDOW_H

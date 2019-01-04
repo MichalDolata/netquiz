@@ -90,7 +90,7 @@ Click the button to join the game</string>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="question">
           <property name="geometry">
            <rect>
             <x>40</x>
@@ -120,34 +120,50 @@ Click the button to join the game</string>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
-            <widget class="QPushButton" name="pushButton_2">
+            <widget class="QPushButton" name="answer_0">
              <property name="text">
               <string>Answer1</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_4">
-             <property name="text">
-              <string>Answer3</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButton_3">
+            <widget class="QPushButton" name="answer_1">
              <property name="text">
               <string>Answer2</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_5">
+            <widget class="QPushButton" name="answer_2">
+             <property name="text">
+              <string>Answer3</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="answer_3">
              <property name="text">
               <string>Answer4</string>
              </property>
             </widget>
            </item>
           </layout>
+         </widget>
+         <widget class="QLabel" name="timerLabel">
+          <property name="geometry">
+           <rect>
+            <x>70</x>
+            <y>220</y>
+            <width>341</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>0 seconds left</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
          </widget>
         </widget>
        </item>
