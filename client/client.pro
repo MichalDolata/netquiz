@@ -26,11 +26,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    message.pb.cc
+    ../protobuf/message.pb.cc
 
 HEADERS += \
         mainwindow.h \
-    message.pb.h
+    ../protobuf/message.pb.h
 
 FORMS += \
         mainwindow.ui

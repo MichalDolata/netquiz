@@ -1,3 +1,4 @@
+#include <arpa/inet.h>
 #include "client.h"
 
 constexpr int BUF_SIZE = 255;
@@ -14,7 +15,7 @@ int Client::read_from_socket() {
 
     if (size_bytes_to_read > 0) return 0;
     else {
-      bytes_to_read = (size_buf[0] << 24) | (size_buf[1] << 16) | (size_buf[2] << 8) | (size_buf[3]);
+      bytes_to_read = htonl(*((uint32_t*)size_buf));
       size_bytes_to_read = 0;
     }
   } else {
@@ -50,8 +51,8 @@ void Client::handle_message() {
     auto answer = current_message.answer();
 
     current_answer_timestamp = answer.sent_at();
-    current_question_id = answer.question_id();
     current_answer = answer.selected_answer();
+    current_question_id = answer.question_id();
   } else {
     cout << "Unsupported message" << endl;
   }
@@ -70,12 +71,13 @@ void Client::send_ranking() {
 
   ranking_message.set_allocated_ranking(ranking);
 
-  string *message = new string;
-  ranking_message.SerializeToString(message);
+  string message;
+  ranking_message.SerializeToString(&message);
 
-  int32_t size = message->size();
-  char message_size[4] = { (char)(size >> 24), (char)(size >> 16), (char)(size >> 8), (char)(size) };
+  uint32_t size = message.size();
+  size = ntohl(size);
+  char *message_size = (char*)&size;
 
   send(socket, message_size, 4, 0);
-  send(socket, message->data(), message->size(), 0);
+  send(socket, message.data(), message.size(), 0);
 }

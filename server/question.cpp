@@ -1,6 +1,7 @@
 #include <chrono>
 #include <thread>
 #include <functional>
+#include <arpa/inet.h>
 #include <sys/socket.h>
 #include "question.h"
 #include "message.pb.h"
@@ -73,13 +74,14 @@ void Question::send_to_client(int socket) {
 
   question_message.set_allocated_question(question);
 
-  string *message = new string;
-  question_message.SerializeToString(message);
+  string message;
+  question_message.SerializeToString(&message);
 
-  int32_t size = message->size();
-  char message_size[4] = { (char)(size >> 24), (char)(size >> 16), (char)(size >> 8), (char)(size) };
+  int32_t size = message.size();
+  size = ntohl(size);
+  char *message_size = (char*)&size;
 
   send(socket, message_size, 4, 0);
-  send(socket, message->data(), message->size(), 0);
+  send(socket, message.data(), message.size(), 0);
 }
 
