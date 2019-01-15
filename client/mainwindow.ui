@@ -100,7 +100,7 @@ Click the button to join the game</string>
            </rect>
           </property>
           <property name="text">
-           <string>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec non.</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -122,28 +122,28 @@ Click the button to join the game</string>
            <item>
             <widget class="QPushButton" name="answer_0">
              <property name="text">
-              <string>Answer1</string>
+              <string/>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QPushButton" name="answer_1">
              <property name="text">
-              <string>Answer2</string>
+              <string/>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QPushButton" name="answer_2">
              <property name="text">
-              <string>Answer3</string>
+              <string/>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QPushButton" name="answer_3">
              <property name="text">
-              <string>Answer4</string>
+              <string/>
              </property>
             </widget>
            </item>

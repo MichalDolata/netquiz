@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <string>
 #include <unistd.h>
 #include <sys/types.h>
@@ -12,10 +14,10 @@
 
 using namespace std;
 
-void bind_address(int listen_socket) {
+void bind_address(int listen_socket, int port) {
   sockaddr_in server_addr;
   server_addr.sin_family = AF_INET;
-  server_addr.sin_port = htons(1337);
+  server_addr.sin_port = htons(port);
   server_addr.sin_addr.s_addr = INADDR_ANY; 
 
   if(bind(listen_socket, (sockaddr *)&server_addr, sizeof(server_addr)) == -1) {
@@ -75,12 +77,36 @@ void epoll_loop(int epoll_fd, int listen_socket) {
   }
 }
 
+int load_port_from_config() {
+  ifstream file{"settings.cfg"};
+
+  int port;
+  string line;
+  while(getline(file, line)) {
+    stringstream ss{line};
+    string setting;
+    getline(ss, setting, '=');
+
+    if(setting == "PORT") {
+      ss >> port;
+      return port;
+    }
+  }
+  
+  return -1;
+}
+
 int main() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
+  int port = load_port_from_config();
+  if(port == -1) {
+    cerr << "Couldn't get port from config" << endl;
+    exit(-1);
+  }
   int listen_socket = socket(AF_INET, SOCK_STREAM, 0);
 
-  bind_address(listen_socket);
+  bind_address(listen_socket, port);
   listen(listen_socket, 1);
 
   int epoll_fd = epoll_create1(0);

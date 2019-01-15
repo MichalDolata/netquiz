@@ -34,8 +34,7 @@ private:
     quint64 question_id;
 
     void handle_message();
-    void disable_answering();
-    void enable_answering();
+    void enable_answering(bool enabled);
     void handle_answer(int selected_answer);
     void send_message(Message &message);
 

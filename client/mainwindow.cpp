@@ -1,12 +1,37 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <string>
+#include <fstream>
+#include <sstream>
 
 constexpr int MENU_WIDGET = 0;
 constexpr int GAME_WIDGET = 1;
 constexpr int BUF_SIZE = 255;
 
 using namespace message;
+
+pair<string, quint16> load_settings_from_config() {
+  ifstream file{"settings.cfg"};
+
+  quint16 port;
+  string host;
+
+  string line;
+  while(getline(file, line)) {
+    stringstream ss{line};
+    string setting;
+    getline(ss, setting, '=');
+
+    if(setting == "PORT") {
+      ss >> port;
+    } else if(setting == "HOST") {
+      ss >> host;
+    }
+  }
+    cout << host << endl;
+    cout << port << endl;
+  return make_pair(host, port);
+}
 
 QByteArray intToArray(qint32 source)
 {
@@ -33,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->answer_2, &QPushButton::clicked, this, [this]() { handle_answer(2); });
     connect(ui->answer_3, &QPushButton::clicked, this, [this]() { handle_answer(3); });
 
-    disable_answering();
+    enable_answering(false);
 }
 
 MainWindow::~MainWindow()
@@ -44,8 +69,15 @@ MainWindow::~MainWindow()
 void MainWindow::handleConnect() {
     ui->connectButton->setEnabled(false);
 
+    auto settings = load_settings_from_config();
+    if(settings.first == "" || settings.second == 0) {
+        ui->statusBar->showMessage("Couldn't get setting from config", 5000);
+        ui->connectButton->setEnabled(true);
+        return;
+    }
+
     socket = new QTcpSocket(this);
-    socket->connectToHost("0.0.0.0", 1337);
+    socket->connectToHost(settings.first.c_str(), settings.second);
 
     if(socket->waitForConnected()) {
         ui->stackedWidget->setCurrentIndex(GAME_WIDGET);
@@ -56,10 +88,12 @@ void MainWindow::handleConnect() {
         setPlayerNameMessage.set_allocated_set_player_name(content);
 
         send_message(setPlayerNameMessage);
-    }
-    connect(socket, &QTcpSocket::readyRead, this, &MainWindow::handleRead);
 
-    ui->statusBar->clearMessage();
+        connect(socket, &QTcpSocket::readyRead, this, &MainWindow::handleRead);
+        ui->statusBar->clearMessage();
+    } else {
+        ui->statusBar->showMessage("Can't connect to the server", 5000);
+    }
     ui->connectButton->setEnabled(true);
 }
 
@@ -71,7 +105,6 @@ void MainWindow::handleRead() {
       if (size_bytes_to_read > 0) return;
       else {
         bytes_to_read = (size_buf[0] << 24) | (size_buf[1] << 16) | (size_buf[2] << 8) | (size_buf[3]);
-        size_bytes_to_read = 0;
       }
     }
 
@@ -113,7 +146,7 @@ void MainWindow::handle_message() {
       ui->answer_3->setText(question.answers(3).data());
       deadline_at = question.deadline_at();
       timer->start();
-      enable_answering();
+      enable_answering(true);
     } else {
       cout << "Unsupported message" << endl;
     }
@@ -124,27 +157,20 @@ void MainWindow::handleTick() {
     if (timeLeft >= 0) ui->timerLabel->setText(QString("%1 seconds left").arg(timeLeft));
     else {
         ui->timerLabel->setText("Waiting for a next question");
-        disable_answering();
+        enable_answering(false);
         timer->stop();
     }
 }
 
-void MainWindow::disable_answering() {
-    ui->answer_0->setEnabled(false);
-    ui->answer_1->setEnabled(false);
-    ui->answer_2->setEnabled(false);
-    ui->answer_3->setEnabled(false);
-}
-
-void MainWindow::enable_answering() {
-    ui->answer_0->setEnabled(true);
-    ui->answer_1->setEnabled(true);
-    ui->answer_2->setEnabled(true);
-    ui->answer_3->setEnabled(true);
+void MainWindow::enable_answering(bool enabled) {
+    ui->answer_0->setEnabled(enabled);
+    ui->answer_1->setEnabled(enabled);
+    ui->answer_2->setEnabled(enabled);
+    ui->answer_3->setEnabled(enabled);
 }
 
 void MainWindow::handle_answer(int seleced_answer) {
-    disable_answering();
+    enable_answering(false);
     Message answer_message;
     Answer *answer = new Answer;
     answer->set_question_id(question_id);
@@ -157,9 +183,9 @@ void MainWindow::handle_answer(int seleced_answer) {
 }
 
 void MainWindow::send_message(Message &message) {
-    std::string *encoded_message = new std::string;
-    message.SerializeToString(encoded_message);
+    std::string encoded_message;
+    message.SerializeToString(&encoded_message);
 
-    socket->write(intToArray((qint32) encoded_message->size()));
-    socket->write(encoded_message->data());
+    socket->write(intToArray((qint32) encoded_message.size()));
+    socket->write(encoded_message.data());
 }
