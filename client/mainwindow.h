@@ -42,6 +42,7 @@ private slots:
     void handleConnect();
     void handleRead();
     void handleTick();
+    void handleDisconnect();
 };
 
 #endif // MAINWINDOW_H

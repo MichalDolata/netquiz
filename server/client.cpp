@@ -33,19 +33,19 @@ int Client::read_from_socket() {
       message_buffer.clear();
       bytes_to_read = 0;
       size_bytes_to_read = 4;
-      handle_message();
+      return handle_message();
     }
   }
 
   return 0;
 }
 
-void Client::handle_message() {
+int Client::handle_message() {
   if(current_message.has_set_player_name()) {
     nick_name = current_message.set_player_name().name();
     cout << nick_name << " connected" << endl;
-    send_ranking();
-    Question::current_question.send_to_client(socket);
+    if(send_ranking() < 0) return -1;
+    return Question::current_question->send_to_client(socket);
   } else if(current_message.has_answer()) {
     cout << "Got answer from " << nick_name << endl;
     auto answer = current_message.answer();
@@ -56,9 +56,11 @@ void Client::handle_message() {
   } else {
     cout << "Unsupported message" << endl;
   }
+
+  return 0;
 }
 
-void Client::send_ranking() {
+int Client::send_ranking() {
   cout << "Sending ranking to " << nick_name << endl;
   Message ranking_message;
   message::Ranking *ranking = new message::Ranking;
@@ -78,6 +80,8 @@ void Client::send_ranking() {
   size = ntohl(size);
   char *message_size = (char*)&size;
 
-  send(socket, message_size, 4, 0);
-  send(socket, message.data(), message.size(), 0);
+  if(send(socket, message_size, 4, 0) < 0) return -1;
+  if(send(socket, message.data(), message.size(), 0) < 0) return -1;
+
+  return 0;
 }

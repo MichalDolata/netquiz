@@ -28,8 +28,7 @@ pair<string, quint16> load_settings_from_config() {
       ss >> host;
     }
   }
-    cout << host << endl;
-    cout << port << endl;
+
   return make_pair(host, port);
 }
 
@@ -90,6 +89,7 @@ void MainWindow::handleConnect() {
         send_message(setPlayerNameMessage);
 
         connect(socket, &QTcpSocket::readyRead, this, &MainWindow::handleRead);
+        connect(socket, &QTcpSocket::disconnected, this, &MainWindow::handleDisconnect);
         ui->statusBar->clearMessage();
     } else {
         ui->statusBar->showMessage("Can't connect to the server", 5000);
@@ -160,6 +160,11 @@ void MainWindow::handleTick() {
         enable_answering(false);
         timer->stop();
     }
+}
+
+void MainWindow::handleDisconnect() {
+    ui->stackedWidget->setCurrentIndex(MENU_WIDGET);
+    ui->statusBar->showMessage("Disconnected", 5000);
 }
 
 void MainWindow::enable_answering(bool enabled) {
