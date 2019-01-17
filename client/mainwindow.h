@@ -32,6 +32,7 @@ private:
     QTimer *timer;
     quint64 deadline_at;
     quint64 question_id;
+    quint64 connected_at;
 
     void handle_message();
     void enable_answering(bool enabled);

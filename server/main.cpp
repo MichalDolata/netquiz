@@ -110,7 +110,8 @@ int main() {
   listen(listen_socket, 1);
 
   int epoll_fd = epoll_create1(0);
-  Question::current_question = new Question(epoll_fd);
+
+  Question::current_question.run(epoll_fd);
 
   epoll_loop(epoll_fd, listen_socket);
 

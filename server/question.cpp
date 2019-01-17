@@ -5,20 +5,22 @@
 #include <sys/socket.h>
 #include <sys/epoll.h>
 #include <sstream>
+#include <limits>
 #include <unistd.h>
 #include <string>
 #include "question.h"
 #include "message.pb.h"
-#include "client.h"
 
 using message::Message;
 
 uint64_t Question::last_id = 0;
-Question *Question::current_question = NULL;
+Question Question::current_question;
 
-Question::Question(int epoll_fd) {
+Question::Question() {
   database = ifstream{"questions.db"};
+}
 
+void Question::run(int epoll_fd) {
   load_next_question();
   std::thread([this, epoll_fd]() {
       while (true)
@@ -28,16 +30,10 @@ Question::Question(int epoll_fd) {
         tp += std::chrono::seconds(5);
         std::this_thread::sleep_until(tp);
         
-        for(auto it: Client::client_list) {
-          if(it.second->current_question_id == Question::last_id 
-            && it.second->current_answer == Question::current_question->correct_answer) {
-            // TODO: calculate points concidering timestamp of answer
-            it.second->points += 10;
-          }
-        }
+        calculate_points();
         load_next_question();
         for(auto it: Client::client_list) {
-          if(send_to_client(it.first) == -1 || it.second->send_ranking() == -1) {
+          if(send_to_client(it.second) == -1 || it.second->send_ranking() == -1) {
             int client_socket = it.first;
             Client* client = Client::client_list.at(client_socket);
             Client::client_list.erase(client_socket);
@@ -54,6 +50,29 @@ Question::Question(int epoll_fd) {
         }
       }
   }).detach();
+}
+
+void Question::calculate_points() {
+  uint64_t best_time = 0xFFFFFFFFFFFFFFFF;
+
+  for(auto it: Client::client_list) {
+    auto player = it.second;
+    if(player->current_question_id == Question::last_id 
+      && player->current_answer == Question::current_question.correct_answer) {
+      best_time = min(best_time, player->connected_at + player->current_answer_timestamp);
+    }
+  }
+
+  for(auto it: Client::client_list) {
+    auto player = it.second;
+    if(player->current_question_id == Question::last_id 
+      && player->current_answer == Question::current_question.correct_answer) {
+      player->points += 10;
+      if(player->connected_at + player->current_answer_timestamp == best_time) {
+        player->points += 5;
+      }
+    }
+  }
 }
 
 void Question::load_next_question() {
@@ -73,10 +92,11 @@ void Question::load_next_question() {
     getline(ss, answers[3], '|');
     ss >> correct_answer;
 
-    deadline_at = time(NULL) + 30;
+    deadline_at = time(NULL) + 15;
 }
 
-int Question::send_to_client(int socket) {
+int Question::send_to_client(Client *client) {
+  int socket = client->socket;
   Message question_message;
   message::Question *question = new message::Question;
   
@@ -86,7 +106,8 @@ int Question::send_to_client(int socket) {
   for(auto it: answers) {
     question->add_answers(it);
   }
-  question->set_deadline_at(deadline_at);
+
+  question->set_deadline_at(deadline_at - client->connected_at);
 
   question_message.set_allocated_question(question);
 

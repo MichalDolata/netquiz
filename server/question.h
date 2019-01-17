@@ -4,13 +4,14 @@
 #include <string>
 #include <stdint.h>
 #include <fstream>
+#include "client.h"
 
 using namespace std;
 
 class Question {
   public:
   static uint64_t last_id;
-  static Question *current_question;
+  static Question current_question;
   private:
   uint64_t id;
   string question;
@@ -19,9 +20,11 @@ class Question {
   uint64_t deadline_at;
   ifstream database;
   public:
-  Question(int epoll_fd);
+  Question();
   void load_next_question();
-  int send_to_client(int socket);
+  int send_to_client(Client *client);
+  void run(int epoll_fd);
+  void calculate_points();
 };
 
 #endif

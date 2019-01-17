@@ -79,6 +79,7 @@ void MainWindow::handleConnect() {
     socket->connectToHost(settings.first.c_str(), settings.second);
 
     if(socket->waitForConnected()) {
+        connected_at = time(NULL);
         ui->stackedWidget->setCurrentIndex(GAME_WIDGET);
 
         Message setPlayerNameMessage;
@@ -144,7 +145,8 @@ void MainWindow::handle_message() {
       ui->answer_1->setText(question.answers(1).data());
       ui->answer_2->setText(question.answers(2).data());
       ui->answer_3->setText(question.answers(3).data());
-      deadline_at = question.deadline_at();
+      deadline_at = connected_at + question.deadline_at();
+      handleTick();
       timer->start();
       enable_answering(true);
     } else {
@@ -180,7 +182,7 @@ void MainWindow::handle_answer(int seleced_answer) {
     Answer *answer = new Answer;
     answer->set_question_id(question_id);
     answer->set_selected_answer(seleced_answer);
-    answer->set_sent_at(time(nullptr));
+    answer->set_sent_at(time(nullptr) - connected_at);
 
     answer_message.set_allocated_answer(answer);
 

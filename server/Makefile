@@ -12,7 +12,7 @@ message.o: ../protobuf/message.pb.cc ../protobuf/message.pb.h
 client.o: client.cpp client.h
 	$(CC) -c -o $@ client.cpp $(CFLAGS)
 
-question.o: question.cpp question.h
+question.o: question.cpp question.h client.h
 	$(CC) -c -o $@ question.cpp $(CFLAGS)
 
 main.o: main.cpp

@@ -1,5 +1,6 @@
 #include <arpa/inet.h>
 #include "client.h"
+#include "question.h"
 
 constexpr int BUF_SIZE = 255;
 
@@ -45,7 +46,7 @@ int Client::handle_message() {
     nick_name = current_message.set_player_name().name();
     cout << nick_name << " connected" << endl;
     if(send_ranking() < 0) return -1;
-    return Question::current_question->send_to_client(socket);
+    return Question::current_question.send_to_client(this);
   } else if(current_message.has_answer()) {
     cout << "Got answer from " << nick_name << endl;
     auto answer = current_message.answer();
