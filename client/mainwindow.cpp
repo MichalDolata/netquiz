@@ -27,8 +27,8 @@ pair<string, quint16> load_settings_from_config() {
     } else if(setting == "HOST") {
       ss >> host;
     }
-  }
 
+  }
   return make_pair(host, port);
 }
 
@@ -133,8 +133,17 @@ void MainWindow::handleRead() {
 void MainWindow::handle_message() {
     if(current_message.has_ranking()) {
         ui->playerList->clear();
-        for(auto it: current_message.ranking().players()) {
-            QString label = QString("%1 %2").arg(it.name().data()).arg(it.points());
+        auto ranking  = vector<pair<string,int>>();
+        for(auto it: current_message.ranking().players())
+            ranking.push_back(make_pair(string(it.name().data()), it.points()));
+        sort(ranking.begin(), ranking.end(),
+                                    [](const pair<string,int> &a, const pair<string,int> &b)
+                                    {
+                                        return a.second > b.second;
+                                    });
+        for(auto it: ranking) {
+
+            QString label = QString("%1 %2").arg(it.first.c_str()).arg(it.second);
             ui->playerList->addItem(label);
         }
     } else if(current_message.has_question()) {
