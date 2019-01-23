@@ -8,17 +8,30 @@
 #include <sys/epoll.h>
 #include <map>
 #include <netinet/in.h>
+#include <fcntl.h>
 #include "message.pb.h"
 #include "client.h"
 #include "question.h"
 
+
 using namespace std;
+void set_nonblock(int socket) {
+    int flags;
+    flags = fcntl(socket,F_GETFL,0);
+    assert(flags != -1);
+    int res = fcntl(socket, F_SETFL, O_NONBLOCK, 1);
+    cout << "set nonblock" << res << "\n";
+    int new_size=256;
+    setsockopt(socket, SOL_SOCKET, SO_SNDBUF , &new_size, sizeof(new_size));
+  //  getsockopt(socket, SOL_SOCKET, SO_SNDBUF, &new_size, sizeof(new_size));
+  //  cout << new_size;
+}
 
 void bind_address(int listen_socket, int port) {
   sockaddr_in server_addr;
   server_addr.sin_family = AF_INET;
   server_addr.sin_port = htons(port);
-  server_addr.sin_addr.s_addr = INADDR_ANY; 
+  server_addr.sin_addr.s_addr = INADDR_ANY;
 
   if(bind(listen_socket, (sockaddr *)&server_addr, sizeof(server_addr)) == -1) {
     cerr << "Couldn't bind the address" << endl;
@@ -46,8 +59,10 @@ void epoll_loop(int epoll_fd, int listen_socket) {
 
   epoll_ctl(epoll_fd, EPOLL_CTL_ADD, listen_socket, &listen_event);
 
+
+
   epoll_event current_event;
-  
+
   while(true) {
     epoll_wait(epoll_fd, &current_event, 1, -1);
 
@@ -61,18 +76,34 @@ void epoll_loop(int epoll_fd, int listen_socket) {
       listen_event.events = EPOLLIN;
       listen_event.data.fd = client_socket;
       epoll_ctl(epoll_fd, EPOLL_CTL_ADD, client_socket, &listen_event);
-
-      Client::client_list.insert(pair<int, Client*>(client_socket, new Client(client_socket)));
+      set_nonblock(client_socket);
+      Client::client_list.insert(pair<int, Client*>(client_socket, new Client(client_socket, epoll_fd)));
     } else if (current_event.events & EPOLLIN) {
       int client_socket = current_event.data.fd;
 
       if(Client::client_list.at(client_socket)->read_from_socket() == -1) {
         close_client_socket(client_socket, epoll_fd);
-      } 
-      
+      }
+
     } else if (current_event.events & EPOLLERR || current_event.events & EPOLLHUP) {
+        int client_socket = current_event.data.fd;
+        close_client_socket(client_socket, epoll_fd);
+    }
+    if (current_event.events & EPOLLOUT){
+
       int client_socket = current_event.data.fd;
-      close_client_socket(client_socket, epoll_fd);
+      auto client = Client::client_list.at(client_socket);
+      int res = client->send_message();
+      if(res == -1){
+        close_client_socket(client_socket, epoll_fd);
+      }else if(res == 1){
+          cout << "Delete epollout\n";
+        epoll_event event_to_delete;
+        event_to_delete.events = EPOLLOUT;
+        event_to_delete.data.fd = client_socket;
+        epoll_ctl(epoll_fd, EPOLL_CTL_DEL, client_socket, &event_to_delete);
+      }
+
     }
   }
 }
@@ -92,7 +123,7 @@ int load_port_from_config() {
       return port;
     }
   }
-  
+
   return -1;
 }
 
@@ -105,8 +136,9 @@ int main() {
     exit(-1);
   }
   int listen_socket = socket(AF_INET, SOCK_STREAM, 0);
-
-  bind_address(listen_socket, port);
+  int flag = 1;
+  setsockopt(listen_socket, SOL_SOCKET, SO_REUSEADDR, &flag, sizeof(int));
+   bind_address(listen_socket, port);
   listen(listen_socket, 1);
 
   int epoll_fd = epoll_create1(0);

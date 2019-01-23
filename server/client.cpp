@@ -10,7 +10,7 @@ map<int, Client*> Client::client_list;
 int Client::read_from_socket() {
   int bytes_read;
   if(!bytes_to_read) {
-    bytes_read = recv(socket, (size_buf + (4 - size_bytes_to_read)), size_bytes_to_read, 0); 
+    bytes_read = recv(socket, (size_buf + (4 - size_bytes_to_read)), size_bytes_to_read, 0);
     if (!bytes_read) return -1;
 
     size_bytes_to_read -= bytes_read;
@@ -47,6 +47,7 @@ int Client::handle_message() {
     nick_name = current_message.set_player_name().name();
     cout << nick_name << " connected" << endl;
     if(send_ranking() < 0) return -1;
+
     return Question::current_question.send_to_client(this);
   } else if(current_message.has_answer()) {
     cout << "Got answer from " << nick_name << endl;
@@ -72,7 +73,7 @@ int Client::send_ranking() {
   cout << "Sending ranking to " << nick_name << endl;
   Message ranking_message;
   message::Ranking *ranking = new message::Ranking;
-  
+
   for(auto it: Client::client_list) {
     message::Ranking_Player *player = ranking->add_players();
     player->set_name(it.second->nick_name);
@@ -88,8 +89,41 @@ int Client::send_ranking() {
   size = ntohl(size);
   char *message_size = (char*)&size;
 
-  if(send(socket, message_size, 4, 0) < 0) return -1;
-  if(send(socket, message.data(), message.size(), 0) < 0) return -1;
-
+  add_message(string(message_size,4));
+  add_message(message);
   return 0;
+}
+
+void Client::add_message(string message) {
+
+    message_queue.push(make_pair(string(message), 0));
+    if (message_queue.size() == 1) {
+      int res = send_message();
+
+      if(res == 0)
+      {
+        cout << "Add epollout";
+        epoll_event write_event;
+        write_event.events = EPOLLOUT;
+        write_event.data.fd = socket;
+        epoll_ctl(epoll_fd, EPOLL_CTL_ADD, socket, &write_event);
+
+      }
+    }
+}
+int Client::send_message() {
+  cout << "Send to client\n";
+  auto message = message_queue.front().first;
+  size_t bytes_already_send = message_queue.front().second;
+  size_t bytes_to_send = message.size() - bytes_already_send;
+  auto res = send(socket, message.data() + bytes_already_send, bytes_to_send, 0);
+
+    if (res == -1)return -1;
+  if (bytes_to_send - res == 0) {
+    message_queue.pop();
+    return message_queue.empty();
+  }
+  message_queue.front().second += res;
+  return 0;
+
 }

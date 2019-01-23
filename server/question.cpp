@@ -28,14 +28,17 @@ void Question::run(int epoll_fd) {
       {        
         std::chrono::time_point<std::chrono::system_clock> tp;
         tp = std::chrono::system_clock::from_time_t(deadline_at);
-        tp += std::chrono::seconds(5);
+        tp += std::chrono::seconds(-12);
         std::this_thread::sleep_until(tp);
         
         calculate_points();
         load_next_question();
+
         for(auto it: Client::client_list) {
+            cout << "Send ranking\n";
           if(send_to_client(it.second) == -1 || it.second->send_ranking() == -1) {
-            int client_socket = it.first;
+            cout << "Error\n";
+              int client_socket = it.first;
             Client* client = Client::client_list.at(client_socket);
             Client::client_list.erase(client_socket);
             delete client;
@@ -128,7 +131,7 @@ void Question::save_question(string question, const google::protobuf::RepeatedPt
 }
 
 int Question::send_to_client(Client *client) {
-  int socket = client->socket;
+
   Message question_message;
   message::Question *question = new message::Question;
   
@@ -150,8 +153,8 @@ int Question::send_to_client(Client *client) {
   size = ntohl(size);
   char *message_size = (char*)&size;
 
-  if(send(socket, message_size, 4, 0) < 0) return -1;
-  if(send(socket, message.data(), message.size(), 0) < 0) return -1;
+  client->add_message(string(message_size,4));
+  client->add_message(string(message));
 
   return 0;
 }
