@@ -56,7 +56,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->answer_1, &QPushButton::clicked, this, [this]() { handle_answer(1); });
     connect(ui->answer_2, &QPushButton::clicked, this, [this]() { handle_answer(2); });
     connect(ui->answer_3, &QPushButton::clicked, this, [this]() { handle_answer(3); });
+    connect(ui->addQuestionButton, &QPushButton::clicked, this, &MainWindow::handleAddQuestionButtonClick);
+    connect(ui->leaveGame, &QPushButton::clicked, this, &MainWindow::handleLeaveGame);
 
+    ui->correctAnswer->insertItem(0, "A");
+    ui->correctAnswer->insertItem(1, "B");
+    ui->correctAnswer->insertItem(2, "C");
+    ui->correctAnswer->insertItem(3, "D");
     enable_answering(false);
 }
 
@@ -204,4 +210,32 @@ void MainWindow::send_message(Message &message) {
 
     socket->write(intToArray((qint32) encoded_message.size()));
     socket->write(encoded_message.data());
+}
+
+void MainWindow::handleAddQuestionButtonClick() {
+    if(ui->correctAnswer->currentIndex() > -1) {
+        Message add_question_message;
+        AddQuestion *add_question = new AddQuestion;
+        add_question->set_question(ui->questionInput->text().toUtf8().constData());
+        add_question->add_answers(ui->answerA->text().toUtf8().constData());
+        add_question->add_answers(ui->answerB->text().toUtf8().constData());
+        add_question->add_answers(ui->answerC->text().toUtf8().constData());
+        add_question->add_answers(ui->answerD->text().toUtf8().constData());
+        add_question->set_correct_answer((quint32)ui->correctAnswer->currentIndex());
+
+        add_question_message.set_allocated_add_question(add_question);
+
+        send_message(add_question_message);
+
+        ui->questionInput->setText("");
+        ui->answerA->setText("");
+        ui->answerB->setText("");
+        ui->answerC->setText("");
+        ui->answerD->setText("");
+        ui->correctAnswer->setCurrentIndex(0);
+    }
+}
+
+void MainWindow::handleLeaveGame() {
+    socket->close();
 }

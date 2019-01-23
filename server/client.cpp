@@ -1,4 +1,5 @@
 #include <arpa/inet.h>
+#include <google/protobuf/repeated_field.h>
 #include "client.h"
 #include "question.h"
 
@@ -54,6 +55,12 @@ int Client::handle_message() {
     current_answer_timestamp = answer.sent_at();
     current_answer = answer.selected_answer();
     current_question_id = answer.question_id();
+  } else if(current_message.has_add_question()) {
+    string question = current_message.add_question().question();
+    const google::protobuf::RepeatedPtrField<string> answers = current_message.add_question().answers();
+    uint32_t correct_answer = current_message.add_question().correct_answer();
+
+    Question::current_question.save_question(question, answers, correct_answer);
   } else {
     cout << "Unsupported message" << endl;
   }

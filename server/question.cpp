@@ -5,6 +5,7 @@
 #include <sys/socket.h>
 #include <sys/epoll.h>
 #include <sstream>
+#include <algorithm>
 #include <limits>
 #include <unistd.h>
 #include <string>
@@ -17,7 +18,7 @@ uint64_t Question::last_id = 0;
 Question Question::current_question;
 
 Question::Question() {
-  database = ifstream{"questions.db"};
+  readed_questions_iterator = readed_questions.begin();
 }
 
 void Question::run(int epoll_fd) {
@@ -77,22 +78,53 @@ void Question::calculate_points() {
 
 void Question::load_next_question() {
     id = ++Question::last_id;
-    
-    if(database.eof()) {
-      database.seekg(0);
+
+    if(readed_questions_iterator != readed_questions.end()) {
+        string line = *readed_questions_iterator;
+        stringstream ss{line};
+        getline(ss, question, '|');
+        getline(ss, answers[0], '|');
+        getline(ss, answers[1], '|');
+        getline(ss, answers[2], '|');
+        getline(ss, answers[3], '|');
+        ss >> correct_answer;
+
+        deadline_at = time(NULL) + 15;
+
+        readed_questions_iterator++;
+    } else {
+      readed_questions.clear();
+
+      database_mutex.lock();     
+      ifstream database{"questions.db"};
+
+      string line;
+      while(!database.eof()) {
+        getline(database, line);
+        readed_questions.push_back(line);
+      }
+
+      random_shuffle(readed_questions.begin(), readed_questions.end());
+      readed_questions_iterator = readed_questions.begin();
+      database.close();
+      database_mutex.unlock();
+
+      load_next_question();
     }
+}
 
-    string line;
-    getline(database, line);
-    stringstream ss{line};
-    getline(ss, question, '|');
-    getline(ss, answers[0], '|');
-    getline(ss, answers[1], '|');
-    getline(ss, answers[2], '|');
-    getline(ss, answers[3], '|');
-    ss >> correct_answer;
+void Question::save_question(string question, const google::protobuf::RepeatedPtrField<string> answers, uint32_t correct_answer) {
+  database_mutex.lock();
 
-    deadline_at = time(NULL) + 15;
+  ofstream database{"questions.db", ios_base::app};
+  database << endl << question << "|";
+  for(auto answer: answers) {
+    database << answer << "|";
+  }
+  database << correct_answer;
+  database.close();
+
+  database_mutex.unlock();
 }
 
 int Question::send_to_client(Client *client) {

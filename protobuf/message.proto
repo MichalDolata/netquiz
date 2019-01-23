@@ -8,6 +8,7 @@ message Message {
     Ranking ranking = 2;
     Question question = 3;
     Answer answer = 4;
+    AddQuestion add_question = 5;
   }
 }
 
@@ -35,4 +36,10 @@ message Answer {
   uint64 question_id = 1;
   uint32 selected_answer = 2;
   uint64 sent_at = 3;
+}
+
+message AddQuestion {
+  string question = 1;
+  repeated string answers = 2;
+  uint32 correct_answer = 3;
 }

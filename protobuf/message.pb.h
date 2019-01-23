@@ -38,7 +38,7 @@ namespace protobuf_message_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[6];
+  static const ::google::protobuf::internal::ParseTable schema[7];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -46,6 +46,9 @@ struct TableStruct {
 void AddDescriptors();
 }  // namespace protobuf_message_2eproto
 namespace message {
+class AddQuestion;
+class AddQuestionDefaultTypeInternal;
+extern AddQuestionDefaultTypeInternal _AddQuestion_default_instance_;
 class Answer;
 class AnswerDefaultTypeInternal;
 extern AnswerDefaultTypeInternal _Answer_default_instance_;
@@ -67,6 +70,7 @@ extern SetPlayerNameDefaultTypeInternal _SetPlayerName_default_instance_;
 }  // namespace message
 namespace google {
 namespace protobuf {
+template<> ::message::AddQuestion* Arena::CreateMaybeMessage<::message::AddQuestion>(Arena*);
 template<> ::message::Answer* Arena::CreateMaybeMessage<::message::Answer>(Arena*);
 template<> ::message::Message* Arena::CreateMaybeMessage<::message::Message>(Arena*);
 template<> ::message::Question* Arena::CreateMaybeMessage<::message::Question>(Arena*);
@@ -113,6 +117,7 @@ class Message : public ::google::protobuf::Message /* @@protoc_insertion_point(c
     kRanking = 2,
     kQuestion = 3,
     kAnswer = 4,
+    kAddQuestion = 5,
     TYPE_NOT_SET = 0,
   };
 
@@ -222,6 +227,18 @@ class Message : public ::google::protobuf::Message /* @@protoc_insertion_point(c
   ::message::Answer* mutable_answer();
   void set_allocated_answer(::message::Answer* answer);
 
+  // .message.AddQuestion add_question = 5;
+  bool has_add_question() const;
+  void clear_add_question();
+  static const int kAddQuestionFieldNumber = 5;
+  private:
+  const ::message::AddQuestion& _internal_add_question() const;
+  public:
+  const ::message::AddQuestion& add_question() const;
+  ::message::AddQuestion* release_add_question();
+  ::message::AddQuestion* mutable_add_question();
+  void set_allocated_add_question(::message::AddQuestion* add_question);
+
   void clear_type();
   TypeCase type_case() const;
   // @@protoc_insertion_point(class_scope:message.Message)
@@ -230,6 +247,7 @@ class Message : public ::google::protobuf::Message /* @@protoc_insertion_point(c
   void set_has_ranking();
   void set_has_question();
   void set_has_answer();
+  void set_has_add_question();
 
   inline bool has_type() const;
   inline void clear_has_type();
@@ -241,6 +259,7 @@ class Message : public ::google::protobuf::Message /* @@protoc_insertion_point(c
     ::message::Ranking* ranking_;
     ::message::Question* question_;
     ::message::Answer* answer_;
+    ::message::AddQuestion* add_question_;
   } type_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   ::google::protobuf::uint32 _oneof_case_[1];
@@ -852,6 +871,147 @@ class Answer : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_message_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class AddQuestion : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:message.AddQuestion) */ {
+ public:
+  AddQuestion();
+  virtual ~AddQuestion();
+
+  AddQuestion(const AddQuestion& from);
+
+  inline AddQuestion& operator=(const AddQuestion& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  AddQuestion(AddQuestion&& from) noexcept
+    : AddQuestion() {
+    *this = ::std::move(from);
+  }
+
+  inline AddQuestion& operator=(AddQuestion&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const AddQuestion& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const AddQuestion* internal_default_instance() {
+    return reinterpret_cast<const AddQuestion*>(
+               &_AddQuestion_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  void Swap(AddQuestion* other);
+  friend void swap(AddQuestion& a, AddQuestion& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline AddQuestion* New() const final {
+    return CreateMaybeMessage<AddQuestion>(NULL);
+  }
+
+  AddQuestion* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<AddQuestion>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const AddQuestion& from);
+  void MergeFrom(const AddQuestion& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AddQuestion* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated string answers = 2;
+  int answers_size() const;
+  void clear_answers();
+  static const int kAnswersFieldNumber = 2;
+  const ::std::string& answers(int index) const;
+  ::std::string* mutable_answers(int index);
+  void set_answers(int index, const ::std::string& value);
+  #if LANG_CXX11
+  void set_answers(int index, ::std::string&& value);
+  #endif
+  void set_answers(int index, const char* value);
+  void set_answers(int index, const char* value, size_t size);
+  ::std::string* add_answers();
+  void add_answers(const ::std::string& value);
+  #if LANG_CXX11
+  void add_answers(::std::string&& value);
+  #endif
+  void add_answers(const char* value);
+  void add_answers(const char* value, size_t size);
+  const ::google::protobuf::RepeatedPtrField< ::std::string>& answers() const;
+  ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_answers();
+
+  // string question = 1;
+  void clear_question();
+  static const int kQuestionFieldNumber = 1;
+  const ::std::string& question() const;
+  void set_question(const ::std::string& value);
+  #if LANG_CXX11
+  void set_question(::std::string&& value);
+  #endif
+  void set_question(const char* value);
+  void set_question(const char* value, size_t size);
+  ::std::string* mutable_question();
+  ::std::string* release_question();
+  void set_allocated_question(::std::string* question);
+
+  // uint32 correct_answer = 3;
+  void clear_correct_answer();
+  static const int kCorrectAnswerFieldNumber = 3;
+  ::google::protobuf::uint32 correct_answer() const;
+  void set_correct_answer(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:message.AddQuestion)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> answers_;
+  ::google::protobuf::internal::ArenaStringPtr question_;
+  ::google::protobuf::uint32 correct_answer_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_message_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -1037,6 +1197,50 @@ inline ::message::Answer* Message::mutable_answer() {
   }
   // @@protoc_insertion_point(field_mutable:message.Message.answer)
   return type_.answer_;
+}
+
+// .message.AddQuestion add_question = 5;
+inline bool Message::has_add_question() const {
+  return type_case() == kAddQuestion;
+}
+inline void Message::set_has_add_question() {
+  _oneof_case_[0] = kAddQuestion;
+}
+inline void Message::clear_add_question() {
+  if (has_add_question()) {
+    delete type_.add_question_;
+    clear_has_type();
+  }
+}
+inline const ::message::AddQuestion& Message::_internal_add_question() const {
+  return *type_.add_question_;
+}
+inline ::message::AddQuestion* Message::release_add_question() {
+  // @@protoc_insertion_point(field_release:message.Message.add_question)
+  if (has_add_question()) {
+    clear_has_type();
+      ::message::AddQuestion* temp = type_.add_question_;
+    type_.add_question_ = NULL;
+    return temp;
+  } else {
+    return NULL;
+  }
+}
+inline const ::message::AddQuestion& Message::add_question() const {
+  // @@protoc_insertion_point(field_get:message.Message.add_question)
+  return has_add_question()
+      ? *type_.add_question_
+      : *reinterpret_cast< ::message::AddQuestion*>(&::message::_AddQuestion_default_instance_);
+}
+inline ::message::AddQuestion* Message::mutable_add_question() {
+  if (!has_add_question()) {
+    clear_type();
+    set_has_add_question();
+    type_.add_question_ = CreateMaybeMessage< ::message::AddQuestion >(
+        GetArenaNoVirtual());
+  }
+  // @@protoc_insertion_point(field_mutable:message.Message.add_question)
+  return type_.add_question_;
 }
 
 inline bool Message::has_type() const {
@@ -1410,9 +1614,151 @@ inline void Answer::set_sent_at(::google::protobuf::uint64 value) {
   // @@protoc_insertion_point(field_set:message.Answer.sent_at)
 }
 
+// -------------------------------------------------------------------
+
+// AddQuestion
+
+// string question = 1;
+inline void AddQuestion::clear_question() {
+  question_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& AddQuestion::question() const {
+  // @@protoc_insertion_point(field_get:message.AddQuestion.question)
+  return question_.GetNoArena();
+}
+inline void AddQuestion::set_question(const ::std::string& value) {
+  
+  question_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:message.AddQuestion.question)
+}
+#if LANG_CXX11
+inline void AddQuestion::set_question(::std::string&& value) {
+  
+  question_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:message.AddQuestion.question)
+}
+#endif
+inline void AddQuestion::set_question(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  question_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:message.AddQuestion.question)
+}
+inline void AddQuestion::set_question(const char* value, size_t size) {
+  
+  question_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:message.AddQuestion.question)
+}
+inline ::std::string* AddQuestion::mutable_question() {
+  
+  // @@protoc_insertion_point(field_mutable:message.AddQuestion.question)
+  return question_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* AddQuestion::release_question() {
+  // @@protoc_insertion_point(field_release:message.AddQuestion.question)
+  
+  return question_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void AddQuestion::set_allocated_question(::std::string* question) {
+  if (question != NULL) {
+    
+  } else {
+    
+  }
+  question_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), question);
+  // @@protoc_insertion_point(field_set_allocated:message.AddQuestion.question)
+}
+
+// repeated string answers = 2;
+inline int AddQuestion::answers_size() const {
+  return answers_.size();
+}
+inline void AddQuestion::clear_answers() {
+  answers_.Clear();
+}
+inline const ::std::string& AddQuestion::answers(int index) const {
+  // @@protoc_insertion_point(field_get:message.AddQuestion.answers)
+  return answers_.Get(index);
+}
+inline ::std::string* AddQuestion::mutable_answers(int index) {
+  // @@protoc_insertion_point(field_mutable:message.AddQuestion.answers)
+  return answers_.Mutable(index);
+}
+inline void AddQuestion::set_answers(int index, const ::std::string& value) {
+  // @@protoc_insertion_point(field_set:message.AddQuestion.answers)
+  answers_.Mutable(index)->assign(value);
+}
+#if LANG_CXX11
+inline void AddQuestion::set_answers(int index, ::std::string&& value) {
+  // @@protoc_insertion_point(field_set:message.AddQuestion.answers)
+  answers_.Mutable(index)->assign(std::move(value));
+}
+#endif
+inline void AddQuestion::set_answers(int index, const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  answers_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:message.AddQuestion.answers)
+}
+inline void AddQuestion::set_answers(int index, const char* value, size_t size) {
+  answers_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:message.AddQuestion.answers)
+}
+inline ::std::string* AddQuestion::add_answers() {
+  // @@protoc_insertion_point(field_add_mutable:message.AddQuestion.answers)
+  return answers_.Add();
+}
+inline void AddQuestion::add_answers(const ::std::string& value) {
+  answers_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:message.AddQuestion.answers)
+}
+#if LANG_CXX11
+inline void AddQuestion::add_answers(::std::string&& value) {
+  answers_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:message.AddQuestion.answers)
+}
+#endif
+inline void AddQuestion::add_answers(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  answers_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:message.AddQuestion.answers)
+}
+inline void AddQuestion::add_answers(const char* value, size_t size) {
+  answers_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:message.AddQuestion.answers)
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+AddQuestion::answers() const {
+  // @@protoc_insertion_point(field_list:message.AddQuestion.answers)
+  return answers_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+AddQuestion::mutable_answers() {
+  // @@protoc_insertion_point(field_mutable_list:message.AddQuestion.answers)
+  return &answers_;
+}
+
+// uint32 correct_answer = 3;
+inline void AddQuestion::clear_correct_answer() {
+  correct_answer_ = 0u;
+}
+inline ::google::protobuf::uint32 AddQuestion::correct_answer() const {
+  // @@protoc_insertion_point(field_get:message.AddQuestion.correct_answer)
+  return correct_answer_;
+}
+inline void AddQuestion::set_correct_answer(::google::protobuf::uint32 value) {
+  
+  correct_answer_ = value;
+  // @@protoc_insertion_point(field_set:message.AddQuestion.correct_answer)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtNetwork>
+#include <QDialog>
 #include <string>
 #include "message.pb.h"
 
@@ -44,6 +45,8 @@ private slots:
     void handleRead();
     void handleTick();
     void handleDisconnect();
+    void handleAddQuestionButtonClick();
+    void handleLeaveGame();
 };
 
 #endif // MAINWINDOW_H

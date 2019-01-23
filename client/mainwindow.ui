@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1097</width>
-    <height>408</height>
+    <height>457</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>0</x>
       <y>0</y>
       <width>1091</width>
-      <height>381</height>
+      <height>431</height>
      </rect>
     </property>
     <widget class="QWidget" name="menu">
@@ -78,10 +78,34 @@ Click the button to join the game</string>
         <x>19</x>
         <y>19</y>
         <width>1051</width>
-        <height>361</height>
+        <height>411</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
+       <item row="1" column="1">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Player ranking</string>
+         </property>
+         <widget class="QListWidget" name="playerList">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>20</y>
+            <width>521</width>
+            <height>351</height>
+           </rect>
+          </property>
+         </widget>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="leaveGame">
+         <property name="text">
+          <string>Leave game</string>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="0" rowspan="2">
         <widget class="QFrame" name="frame">
          <property name="frameShape">
@@ -153,7 +177,7 @@ Click the button to join the game</string>
           <property name="geometry">
            <rect>
             <x>70</x>
-            <y>220</y>
+            <y>190</y>
             <width>341</width>
             <height>41</height>
            </rect>
@@ -165,28 +189,115 @@ Click the button to join the game</string>
            <set>Qt::AlignCenter</set>
           </property>
          </widget>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Leave game</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QGroupBox" name="groupBox">
-         <property name="title">
-          <string>Player ranking</string>
-         </property>
-         <widget class="QListWidget" name="playerList">
+         <widget class="QWidget" name="gridLayoutWidget">
           <property name="geometry">
            <rect>
-            <x>0</x>
-            <y>20</y>
-            <width>521</width>
-            <height>311</height>
+            <x>10</x>
+            <y>250</y>
+            <width>411</width>
+            <height>151</height>
            </rect>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+            <widget class="QLineEdit" name="questionInput">
+             <property name="focusPolicy">
+              <enum>Qt::StrongFocus</enum>
+             </property>
+             <property name="placeholderText">
+              <string>Question</string>
+             </property>
+            </widget>
+           </item>
+          <item row="1" column="0">
+            <widget class="QLineEdit" name="answerA">
+             <property name="focusPolicy">
+              <enum>Qt::StrongFocus</enum>
+             </property>
+             <property name="placeholderText">
+              <string>Answer A</string>
+             </property>
+            </widget>
+           </item>
+                      <item row="2" column="0">
+            <widget class="QLineEdit" name="answerB">
+             <property name="focusPolicy">
+              <enum>Qt::StrongFocus</enum>
+             </property>
+             <property name="placeholderText">
+              <string>Answer B</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLineEdit" name="answerC">
+             <property name="focusPolicy">
+              <enum>Qt::StrongFocus</enum>
+             </property>
+             <property name="placeholderText">
+              <string>Answer C</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLineEdit" name="answerD">
+             <property name="focusPolicy">
+              <enum>Qt::StrongFocus</enum>
+             </property>
+             <property name="placeholderText">
+              <string>Answer D</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QComboBox" name="correctAnswer">
+          <property name="geometry">
+           <rect>
+            <x>430</x>
+            <y>280</y>
+            <width>86</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <property name="currentText">
+           <string/>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_2">
+          <property name="geometry">
+           <rect>
+            <x>430</x>
+            <y>260</y>
+            <width>91</width>
+            <height>17</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Correct answer:</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="addQuestionButton">
+          <property name="geometry">
+           <rect>
+            <x>430</x>
+            <y>310</y>
+            <width>91</width>
+            <height>91</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Add question</string>
           </property>
          </widget>
         </widget>
