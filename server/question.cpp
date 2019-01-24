@@ -28,7 +28,7 @@ void Question::run(int epoll_fd) {
       {        
         std::chrono::time_point<std::chrono::system_clock> tp;
         tp = std::chrono::system_clock::from_time_t(deadline_at);
-        tp += std::chrono::seconds(-12);
+        tp += std::chrono::seconds(5);
         std::this_thread::sleep_until(tp);
         
         calculate_points();

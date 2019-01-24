@@ -73,10 +73,12 @@ void epoll_loop(int epoll_fd, int listen_socket) {
         continue;
       }
 
+
       listen_event.events = EPOLLIN;
       listen_event.data.fd = client_socket;
       epoll_ctl(epoll_fd, EPOLL_CTL_ADD, client_socket, &listen_event);
       set_nonblock(client_socket);
+
       Client::client_list.insert(pair<int, Client*>(client_socket, new Client(client_socket, epoll_fd)));
     } else if (current_event.events & EPOLLIN) {
       int client_socket = current_event.data.fd;
@@ -90,7 +92,7 @@ void epoll_loop(int epoll_fd, int listen_socket) {
         close_client_socket(client_socket, epoll_fd);
     }
     if (current_event.events & EPOLLOUT){
-
+        cout << "Eppol out\n";
       int client_socket = current_event.data.fd;
       auto client = Client::client_list.at(client_socket);
       int res = client->send_message();
@@ -99,9 +101,9 @@ void epoll_loop(int epoll_fd, int listen_socket) {
       }else if(res == 1){
           cout << "Delete epollout\n";
         epoll_event event_to_delete;
-        event_to_delete.events = EPOLLOUT;
+        event_to_delete.events = EPOLLIN;
         event_to_delete.data.fd = client_socket;
-        epoll_ctl(epoll_fd, EPOLL_CTL_DEL, client_socket, &event_to_delete);
+        epoll_ctl(epoll_fd, EPOLL_CTL_MOD, client_socket, &event_to_delete);
       }
 
     }
