@@ -117,9 +117,20 @@ void Question::load_next_question() {
 }
 
 void Question::save_question(string question, const google::protobuf::RepeatedPtrField<string> answers, uint32_t correct_answer) {
-  database_mutex.lock();
+  if (question.find('|') != std::string::npos || question.find('\n') != std::string::npos || question.size() == 0) {
+    cout << "Invalid question\n";
+    return;
+    }
+    for(auto answer: answers){
+        if (answer.find('|') != std::string::npos || answer.find('\n') != std::string::npos || answer.size() == 0) {
+            cout << "Invalid question\n";
+            return;
+        }
+    }
 
+  database_mutex.lock();
   ofstream database{"questions.db", ios_base::app};
+  
   database << endl << question << "|";
   for(auto answer: answers) {
     database << answer << "|";
@@ -128,6 +139,7 @@ void Question::save_question(string question, const google::protobuf::RepeatedPt
   database.close();
 
   database_mutex.unlock();
+  cout << "Added question to database\n";
 }
 
 int Question::send_to_client(Client *client) {

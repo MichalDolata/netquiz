@@ -26,7 +26,7 @@ int Client::read_from_socket() {
 
         bytes_read = recv(socket, buf, can_read_bytes, 0);
         if (!bytes_read) return -1;
-        bytes_to_read -= bytes_to_read;
+        bytes_to_read -= bytes_read;
         message_buffer += string(buf, bytes_read);
 
         if (!bytes_to_read) {
@@ -46,8 +46,9 @@ int Client::handle_message() {
     if (current_message.has_set_player_name()) {
         nick_name = current_message.set_player_name().name();
         cout << nick_name << " connected" << endl;
-        if (send_ranking() < 0) return -1;
-
+       
+        for(auto it: client_list)
+            it.second->send_ranking();
         return Question::current_question.send_to_client(this);
     } else if (current_message.has_answer()) {
         cout << "Got answer from " << nick_name << endl;
@@ -110,7 +111,7 @@ void Client::add_message(string message) {
 }
 
 int Client::send_message() {
-    cout << "Send to client\n";
+    
     auto message = message_queue.front().first;
     size_t bytes_already_send = message_queue.front().second;
     size_t bytes_to_send = message.size() - bytes_already_send;

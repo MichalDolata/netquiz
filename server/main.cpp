@@ -18,13 +18,11 @@ using namespace std;
 void set_nonblock(int socket) {
     int flags;
     flags = fcntl(socket,F_GETFL,0);
-    assert(flags != -1);
+    if(flags == -1)
+        return;
     int res = fcntl(socket, F_SETFL, O_NONBLOCK, 1);
     cout << "set nonblock" << res << "\n";
-    int new_size=256;
-    setsockopt(socket, SOL_SOCKET, SO_SNDBUF , &new_size, sizeof(new_size));
-  //  getsockopt(socket, SOL_SOCKET, SO_SNDBUF, &new_size, sizeof(new_size));
-  //  cout << new_size;
+    
 }
 
 void bind_address(int listen_socket, int port) {
@@ -40,13 +38,15 @@ void bind_address(int listen_socket, int port) {
 }
 
 void close_client_socket(int client_socket, int epoll_fd) {
+  if(Client::client_list.find(client_socket) != Client::client_list.end()){
   Client* client = Client::client_list.at(client_socket);
   Client::client_list.erase(client_socket);
   delete client;
-
+  }
   epoll_event event_to_delete;
   event_to_delete.events = EPOLLIN;
   event_to_delete.data.fd = client_socket;
+  epoll_ctl(epoll_fd, EPOLL_CTL_MOD, client_socket, &event_to_delete);
   epoll_ctl(epoll_fd, EPOLL_CTL_DEL, client_socket, &event_to_delete);
   shutdown(client_socket, SHUT_RDWR);
   close(client_socket);
@@ -68,7 +68,7 @@ void epoll_loop(int epoll_fd, int listen_socket) {
 
     if (current_event.events & EPOLLIN && current_event.data.fd == listen_socket) {
       int client_socket = accept(listen_socket, NULL, NULL);
-
+    
       if(client_socket == -1) {
         continue;
       }
@@ -78,11 +78,11 @@ void epoll_loop(int epoll_fd, int listen_socket) {
       listen_event.data.fd = client_socket;
       epoll_ctl(epoll_fd, EPOLL_CTL_ADD, client_socket, &listen_event);
       set_nonblock(client_socket);
-
+    
       Client::client_list.insert(pair<int, Client*>(client_socket, new Client(client_socket, epoll_fd)));
     } else if (current_event.events & EPOLLIN) {
       int client_socket = current_event.data.fd;
-
+        if(Client::client_list.find(client_socket) == Client::client_list.end())continue;
       if(Client::client_list.at(client_socket)->read_from_socket() == -1) {
         close_client_socket(client_socket, epoll_fd);
       }
@@ -92,18 +92,19 @@ void epoll_loop(int epoll_fd, int listen_socket) {
         close_client_socket(client_socket, epoll_fd);
     }
     if (current_event.events & EPOLLOUT){
-        cout << "Eppol out\n";
+        
       int client_socket = current_event.data.fd;
+      if(Client::client_list.find(client_socket) == Client::client_list.end())continue;
       auto client = Client::client_list.at(client_socket);
       int res = client->send_message();
       if(res == -1){
         close_client_socket(client_socket, epoll_fd);
       }else if(res == 1){
-          cout << "Delete epollout\n";
-        epoll_event event_to_delete;
-        event_to_delete.events = EPOLLIN;
-        event_to_delete.data.fd = client_socket;
-        epoll_ctl(epoll_fd, EPOLL_CTL_MOD, client_socket, &event_to_delete);
+          
+        epoll_event event_to_mod;
+        event_to_mod.events = EPOLLIN;
+        event_to_mod.data.fd = client_socket;
+        epoll_ctl(epoll_fd, EPOLL_CTL_MOD, client_socket, &event_to_mod);
       }
 
     }
